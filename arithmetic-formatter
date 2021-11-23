@@ -1,0 +1,150 @@
+def arithmetic_arranger(vallue , test = False):
+    test_proof = 0
+    while test_proof == 0:
+        import sys
+        boolean_check = test
+        vallue_list=vallue
+        arranged_problems = list()
+        itteration_list=list()
+        first_number = list()
+        first_number_alligned = list()
+        second_number = list()
+        second_number_alligned = list()
+        solution = list()
+        solution_alligned = list()
+        operators = list()
+        separator = list()
+        c = 0
+        for vallue_counter in vallue_list:
+            itteration_list.append(c)
+            first_number.append(c)
+            first_number_alligned.append(c)
+            second_number.append(c)
+            second_number_alligned.append(c)
+            solution.append(c)
+            solution_alligned.append(c)
+            operators.append(c)
+            separator.append('')
+            c = c + 1
+
+
+        for i in itteration_list:
+            operators_check = vallue_list[i].split()
+            if str(operators_check[1].strip()) == '*':
+                test_proof = 1
+                print("Error: Operator must be '+' or '-'")
+            elif str(operators_check[1].strip()) == '/':
+                test_proof = 1
+                print("Error: Operator must be '+' or '-'")
+        if test_proof == 0:
+            for i in itteration_list:
+                all_numbers = vallue_list[i].split()
+                try:
+                    int(all_numbers[0])
+                    int(all_numbers[2])
+                except:
+                    test_proof = 1
+                    print("Error: Numbers must only contain digits.")
+            if test_proof == 0:
+                for i in itteration_list:
+                    lenght_check = vallue_list[i].split()
+                    if len(lenght_check[0].strip())>4:
+                        test_proof = 1
+                        print("Error: Numbers cannot be more than four digits")
+                    if len(lenght_check[2].strip())>4:
+                        test_proof = 1
+                        print("Error: Numbers cannot be more than four digits")
+                if test_proof == 0:
+                    if  len(vallue_list)<5:
+                        boolean_check=True
+                    if len(vallue_list)<=5 and boolean_check==True:
+                        for i in itteration_list:
+                            problems = vallue_list[i].split()
+                            first_number[i] =str(problems[0])
+                            second_number[i] =str(problems[2])
+                            operators[i] =str(problems[1])
+
+
+                            if problems[1] == '+':
+                                result = int(problems[0]) + int(problems[2])
+                                solution[i] =str(result)
+                            elif problems[1] == '-':
+                                result = int(problems[0]) - int(problems[2])
+                                solution[i] =str(result)
+
+
+
+                        for i in itteration_list:
+
+                            if len(str(second_number[i].strip()))==1 and len(str(first_number[i].strip()))>1:
+                                second_number[i] =operators[i] + '   ' + second_number[i]
+                            else:
+                                second_number[i] =operators[i] + ' ' +second_number[i]
+
+                        for i in itteration_list:
+                            lenght = max(len(str(first_number[i].strip())),len(str(second_number[i].strip())))
+                            counter = 0
+
+                            if len(str(second_number[i].strip()))==3 and len(str(first_number[i].strip()))>1:
+                                counter = -1
+                            while counter<lenght:
+                                separator[i] =str(separator[i]) + '-'
+                                counter = counter + 1
+                            if i ==0 :
+                                separator[i] = '    ' + str(separator[i])
+                            else:
+                                separator[i] = '   ' + str(separator[i])
+
+                        for i in itteration_list:
+                            x=0
+                            if len(str(separator[i]))>len(str(first_number[i])):
+                                spacer = len(str(separator[i]))-len(str(first_number[i]))
+                            else:
+                                spacer = len(str(first_number[i]))-len(str(separator[i]))
+                            while x < int(spacer):
+                                if x==0:
+                                    first_number_alligned[i]=' '
+                                else:
+                                    first_number_alligned[i] = str(first_number_alligned[i]) + ' '
+                                x=x+1
+                            first_number_alligned[i]= str(first_number_alligned[i]) + str(first_number[i])
+                        for i in itteration_list:
+                            x=0
+                            if len(str(separator[i]))>len(str(second_number[i])):
+                                spacer = len(str(separator[i]))-len(str(second_number[i]))
+                            else:
+                                spacer = len(str(second_number[i]))-len(str(separator[i]))
+
+                            while x < int(spacer):
+                                if x==0:
+                                    second_number_alligned[i]=' '
+                                else:
+                                    second_number_alligned[i] = str(second_number_alligned[i]) + ' '
+                                x=x+1
+                            second_number_alligned[i]= str(second_number_alligned[i]) + str(second_number[i])
+                        for i in itteration_list:
+                            x=0
+                            if len(str(separator[i]))>len(str(solution[i])):
+                                spacer = len(str(separator[i]))-len(str(solution[i]))
+                            else:
+                                spacer = len(str(solution[i]))-len(str(separator[i]))
+
+                            while x < int(spacer):
+                                if x==0:
+                                    solution_alligned[i]=' '
+                                else:
+                                    solution_alligned[i] = str(solution_alligned[i]) + ' '
+                                x=x+1
+                            solution_alligned[i]= str(solution_alligned[i]) + str(solution[i])
+                        arranged_problems.append(first_number_alligned)
+                        arranged_problems.append(second_number_alligned)
+                        arranged_problems.append(separator)
+                        arranged_problems.append(solution_alligned)
+                        test_proof = 1
+
+
+                        for items in arranged_problems:
+                           print(" ".join(map(str, items)))
+                    else:
+                        test_proof = 1
+                        print("Error: Too many problems.")
